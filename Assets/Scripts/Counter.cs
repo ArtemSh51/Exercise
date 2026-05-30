@@ -1,47 +1,39 @@
+using System;
 using System.Collections;
 using UnityEngine;
-using TMPro;
 
 public class Counter : MonoBehaviour
 {
-    [SerializeField] private float _timeBetweenNumberUpdates = 0.5f;
-    [SerializeField] private TextMeshProUGUI _textMeshPro;
+    [SerializeField] private InputReader _reader;
 
-    private int _number;
-    private bool _isCounterWorking;
+    public event Action CoroutineWorking;
 
-    private void Update()
+    public int Number { get; private set; }
+
+    private void OnEnable()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            _isCounterWorking = _isCounterWorking ? false : true;
+        _reader.ButtonPressed += TurnOnCoroutine;
+    }
 
-            if (_isCounterWorking)
-            {
-                StartCoroutine(IncreaseNumber());
-            }
-            else
-            {
-                StopCoroutine(IncreaseNumber());
-            }
-        }
+    private void OnDisable()
+    {
+        _reader.ButtonPressed -= TurnOnCoroutine;
+    }
+
+    private void TurnOnCoroutine()
+    {
+        StartCoroutine(IncreaseNumber());
     }
 
     private IEnumerator IncreaseNumber()
     {
-        while (_isCounterWorking)
+        while (_reader.IsCounterWorking)
         {
-            _number++;
-            UpdateNumber(_number);
+            Number++;
 
-            yield return new WaitForSeconds(_timeBetweenNumberUpdates);
+            CoroutineWorking?.Invoke();
+
+            yield return new WaitForSeconds(0.5f);
         }
-    }
-
-    private void UpdateNumber(int number)
-    {
-        _textMeshPro.text = number.ToString();
-
-        Debug.Log(number);
     }
 }
