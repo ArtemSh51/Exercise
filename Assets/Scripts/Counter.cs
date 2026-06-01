@@ -16,15 +16,15 @@ public class Counter : MonoBehaviour
 
     private void OnEnable()
     {
-        _reader.ButtonPressed += TurnOnCoroutine;
+        _reader.ButtonPressed += ManageCoroutineWork;
     }
 
     private void OnDisable()
     {
-        _reader.ButtonPressed -= TurnOnCoroutine;
+        _reader.ButtonPressed -= ManageCoroutineWork;
     }
 
-    private void TurnOnCoroutine()
+    private void ManageCoroutineWork()
     {
         _isCounterWorking = _isCounterWorking ? false : true;
 
