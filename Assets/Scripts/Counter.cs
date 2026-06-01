@@ -9,6 +9,9 @@ public class Counter : MonoBehaviour
 
     public event Action<int> NumberIncreasing;
 
+    private bool _isCounterWorking;
+    private Coroutine _coroutine;
+
     public int Number { get; private set; }
 
     private void OnEnable()
@@ -23,14 +26,31 @@ public class Counter : MonoBehaviour
 
     private void TurnOnCoroutine()
     {
-        StartCoroutine(IncreaseNumber());
+        _isCounterWorking = _isCounterWorking ? false : true;
+
+        if (_isCounterWorking)
+        {
+            if (_coroutine == null)
+            {
+                _coroutine = StartCoroutine(IncreaseNumber());
+            }
+        }
+        else
+        {
+            if (_coroutine != null)
+            {
+                StopCoroutine(_coroutine);
+
+                _coroutine = null;
+            }
+        }
     }
 
     private IEnumerator IncreaseNumber()
     {
         WaitForSeconds wait = new WaitForSeconds(_delayTime);
 
-        while (_reader.IsCounterWorking)
+        while (_isCounterWorking)
         {
             Number++;
 
@@ -38,5 +58,7 @@ public class Counter : MonoBehaviour
 
             yield return wait;
         }
+
+        _coroutine = null;
     }
 }
