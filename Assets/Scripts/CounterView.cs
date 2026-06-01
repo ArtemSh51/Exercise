@@ -8,15 +8,15 @@ public class CounterView : MonoBehaviour
 
     private void OnEnable()
     {
-        _counter.CoroutineWorking += UpdateText;
+        _counter.NumberIncreasing += UpdateText;
     }
 
     private void OnDisable()
     {
-        _counter.CoroutineWorking -= UpdateText;
+        _counter.NumberIncreasing -= UpdateText;
     }
 
-    private void UpdateText()
+    private void UpdateText(int number)
     {
         _text.text = _counter.Number.ToString();
 

@@ -5,8 +5,9 @@ using UnityEngine;
 public class Counter : MonoBehaviour
 {
     [SerializeField] private InputReader _reader;
+    [SerializeField] private float _delayTime;
 
-    public event Action CoroutineWorking;
+    public event Action<int> NumberIncreasing;
 
     public int Number { get; private set; }
 
@@ -27,13 +28,15 @@ public class Counter : MonoBehaviour
 
     private IEnumerator IncreaseNumber()
     {
+        WaitForSeconds wait = new WaitForSeconds(_delayTime);
+
         while (_reader.IsCounterWorking)
         {
             Number++;
 
-            CoroutineWorking?.Invoke();
+            NumberIncreasing?.Invoke(Number);
 
-            yield return new WaitForSeconds(0.5f);
+            yield return wait;
         }
     }
 }
