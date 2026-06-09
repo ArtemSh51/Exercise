@@ -41,15 +41,7 @@ public class Creater : MonoBehaviour
 
             for (int i = 0; i < UnityEngine.Random.Range(_minCountOfCubes, _maxCountOfCubes); i++)
             {
-                float negativeAxis = -1;
-                float positiveAxis = 1;
-
-                float randomIncreaseToPosition = UnityEngine.Random.Range(negativeAxis, positiveAxis);
-
-                Vector3 randomAppearanceOfCube = hit.transform.position +
-                    randomIncreaseToPosition * (hit.transform.right + hit.transform.forward).normalized;
-
-                Transform newCube = Instantiate(_cube, randomAppearanceOfCube, Quaternion.identity);
+                Transform newCube = Instantiate(_cube, GetPositionOfCube(hit), Quaternion.identity);
 
                 Vector3 directionOfPush = newCube.transform.position - hit.transform.position;
 
@@ -68,5 +60,18 @@ public class Creater : MonoBehaviour
         }
 
         CubesCreated?.Invoke(hit);
+    }
+
+    private Vector3 GetPositionOfCube(RaycastHit hit)
+    {
+        float negativeAxis = -1;
+        float positiveAxis = 1;
+
+        float randomIncreaseToPosition = UnityEngine.Random.Range(negativeAxis, positiveAxis);
+
+        Vector3 randomAppearanceOfCube = hit.transform.position + 
+            randomIncreaseToPosition * (hit.transform.right + hit.transform.forward).normalized;
+
+        return hit.transform.position + randomIncreaseToPosition * (hit.transform.right + hit.transform.forward).normalized;
     }
 }
