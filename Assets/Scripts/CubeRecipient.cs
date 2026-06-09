@@ -17,7 +17,7 @@ public class CubeRecipient : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            if (Physics.Raycast(_ray, out hit) && hit.transform.CompareTag("Cube"))
+            if (Physics.Raycast(_ray, out hit) && hit.transform.TryGetComponent(out Cube cube))
             {
                 ButtonPressed?.Invoke(hit);
             }
