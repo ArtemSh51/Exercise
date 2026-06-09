@@ -69,9 +69,6 @@ public class Creater : MonoBehaviour
 
         float randomIncreaseToPosition = UnityEngine.Random.Range(negativeAxis, positiveAxis);
 
-        Vector3 randomAppearanceOfCube = hit.transform.position + 
-            randomIncreaseToPosition * (hit.transform.right + hit.transform.forward).normalized;
-
         return hit.transform.position + randomIncreaseToPosition * (hit.transform.right + hit.transform.forward).normalized;
     }
 }
