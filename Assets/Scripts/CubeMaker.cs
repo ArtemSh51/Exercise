@@ -29,7 +29,7 @@ public class CubeMaker : MonoBehaviour
         }
     }
 
-    public void CreateNewCubes(Cube cube)
+    private void CreateNewCubes(Cube cube)
     {
         if (UnityEngine.Random.value <= cube.ChanceOfDivision)
         {
@@ -68,7 +68,7 @@ public class CubeMaker : MonoBehaviour
         return cube.transform.position + randomIncreaseToPosition * (cube.transform.right + cube.transform.forward).normalized;
     }
 
-    public void RemoveCube(Cube cube)
+    private void RemoveCube(Cube cube)
     {
         Destroy(cube.transform.gameObject);
     }

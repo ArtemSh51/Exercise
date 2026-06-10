@@ -17,7 +17,7 @@ public class CubesExploder : MonoBehaviour
         _cubeMaker.CubesCreated -= BlowUp;
     }
 
-    public void BlowUp(Cube cube)
+    private void BlowUp(Cube cube)
     {
         Collider[] cubes = Physics.OverlapSphere(cube.transform.position, _radius);
 
