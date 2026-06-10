@@ -1,25 +1,12 @@
-using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CubeMaker : MonoBehaviour
 {
     [SerializeField] private Cube _cube;
-    [SerializeField] private CubeRecipient _recipient;
 
     [SerializeField, Min(0)] private int _minCountOfCubes;
     [SerializeField, Min(0)] private int _maxCountOfCubes;
-
-    public event Action<Cube> CubesCreated;
-
-    private void OnEnable()
-    {
-        _recipient.ButtonPressed += CreateNewCubes;
-    }
-
-    private void OnDisable()
-    {
-        _recipient.ButtonPressed -= CreateNewCubes;
-    }
 
     private void OnValidate()
     {
@@ -29,33 +16,37 @@ public class CubeMaker : MonoBehaviour
         }
     }
 
-    private void CreateNewCubes(Cube cube)
+    public List<Cube> CreateNewCubes(Cube cube)
     {
-        if (UnityEngine.Random.value <= cube.ChanceOfDivision)
+        List<Cube> cubes = new List<Cube>();
+
+        float currentChanceOfDivision = cube.ChanceOfDivision;
+        float reductionFactor = 2;
+        float divider = 2;
+
+        float numberOfCubes = Random.Range(_minCountOfCubes, _maxCountOfCubes);
+
+        for (int i = 0; i < numberOfCubes; i++)
         {
-            float currentChanceOfDivision = cube.ChanceOfDivision;
-            float reductionFactor = 2;
-            float divider = 2;
+            Cube newCube = Instantiate(_cube, GetPositionOfCube(cube), Quaternion.identity);
 
-            float numberOfCubes = UnityEngine.Random.Range(_minCountOfCubes, _maxCountOfCubes);
+            newCube.transform.localScale = new Vector3(cube.transform.localScale.x / divider,
+                                             cube.transform.localScale.y / divider,
+                                             cube.transform.localScale.z / divider);
 
-            for (int i = 0; i < numberOfCubes; i++)
-            {
-                Cube newCube = Instantiate(_cube, GetPositionOfCube(cube), Quaternion.identity);
+            newCube.SetRandomColor();
 
-                newCube.transform.localScale = new Vector3(cube.transform.localScale.x / divider,
-                                                 cube.transform.localScale.y / divider,
-                                                 cube.transform.localScale.z / divider);
+            newCube.SetChanceOfDivision(currentChanceOfDivision, reductionFactor);
 
-                newCube.SetRandomColor();
-
-                newCube.SetChanceOfDivision(currentChanceOfDivision, reductionFactor);
-            }
-
-            CubesCreated?.Invoke(cube);
+            cubes.Add(newCube);
         }
 
-        RemoveCube(cube);
+        return cubes;
+    }
+
+    public void RemoveCube(Cube cube)
+    {
+        Destroy(cube.transform.gameObject);
     }
 
     private Vector3 GetPositionOfCube(Cube cube)
@@ -63,13 +54,8 @@ public class CubeMaker : MonoBehaviour
         float negativeAxis = -1;
         float positiveAxis = 1;
 
-        float randomIncreaseToPosition = UnityEngine.Random.Range(negativeAxis, positiveAxis);
+        float randomIncreaseToPosition = Random.Range(negativeAxis, positiveAxis);
 
         return cube.transform.position + randomIncreaseToPosition * (cube.transform.right + cube.transform.forward).normalized;
-    }
-
-    private void RemoveCube(Cube cube)
-    {
-        Destroy(cube.transform.gameObject);
     }
 }
