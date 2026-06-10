@@ -5,7 +5,7 @@ public class CubeRecipient : MonoBehaviour
 {
     [SerializeField] private Camera _camera;
 
-    public event Action<RaycastHit> ButtonPressed;
+    public event Action<Cube> ButtonPressed;
 
     private Ray _ray;
 
@@ -19,7 +19,7 @@ public class CubeRecipient : MonoBehaviour
         {
             if (Physics.Raycast(_ray, out hit) && hit.transform.TryGetComponent(out Cube cube))
             {
-                ButtonPressed?.Invoke(hit);
+                ButtonPressed?.Invoke(cube);
             }
         }
     }
