@@ -2,32 +2,29 @@ using UnityEngine;
 
 public class CubeClickHander : MonoBehaviour
 {
-    [SerializeField] private Camera _camera;
     [SerializeField] private CubeMaker _maker;
     [SerializeField] private CubesExploder _exploder;
+    [SerializeField] private CubeInputDetector _inputDetector;
 
-    private Ray _ray;
-
-    private void Update()
+    private void OnEnable()
     {
-        _ray = _camera.ScreenPointToRay(Input.mousePosition);
+        _inputDetector.ButtonPressed += HandleCubeClick;
+    }
 
-        RaycastHit hit;
-
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            if (Physics.Raycast(_ray, out hit) && hit.transform.TryGetComponent(out Cube cube))
-            {
-                HandleCubeClick(cube);
-            }
-        }
+    private void OnDisable()
+    {
+        _inputDetector.ButtonPressed -= HandleCubeClick;
     }
 
     private void HandleCubeClick(Cube cube)
     {
         if (Random.value <= cube.ChanceOfDivision)
         {
-            _exploder.BlowUp(_maker.CreateNewCubes(cube), cube);
+            _exploder.ExplosionOfCreatedCubes(_maker.CreateNewCubes(cube), cube);
+        }
+        else
+        {
+            _exploder.ExplosionOfPressedCube(cube);
         }
 
         _maker.RemoveCube(cube);
