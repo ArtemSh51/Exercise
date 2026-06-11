@@ -1015,7 +1015,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _powerOfDiscardingCubes: 1
-  _forceImpulse: 50
+  _maxCountOfObjectsInEnvironment: 5000
 --- !u!114 &2109444007
 MonoBehaviour:
   m_ObjectHideFlags: 0

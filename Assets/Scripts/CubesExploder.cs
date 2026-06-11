@@ -5,6 +5,15 @@ public class CubesExploder : MonoBehaviour
 {
     [SerializeField, Min(0)] private float _powerOfDiscardingCubes;
 
+    [SerializeField, Range(10, 10000)] private int _maxCountOfObjectsInEnvironment;
+
+    private Collider[] _cubes;
+
+    private void Awake()
+    {
+        _cubes = new Collider[_maxCountOfObjectsInEnvironment];
+    }
+
     public void ExplosionOfCreatedCubes(List<Cube> cubes, Cube cube)
     {
         foreach (Cube currentCube in cubes)
@@ -20,15 +29,15 @@ public class CubesExploder : MonoBehaviour
 
     public void ExplosionOfPressedCube(Cube cube, float forceImpulse, float radius)
     {
-        Collider[] cubes = Physics.OverlapSphere(cube.transform.position, radius);
+        int countOfCubes = Physics.OverlapSphereNonAlloc(cube.transform.position, radius, _cubes);
 
-        foreach (Collider currentCube in cubes)
+        for (int i = 0; i < countOfCubes; i++)
         {
-            Vector3 directionOfPush = (currentCube.transform.position - cube.transform.position);
+            Vector3 directionOfPush = (_cubes[i].transform.position - cube.transform.position);
 
             float distance = directionOfPush.magnitude;
 
-            if (currentCube.TryGetComponent(out Rigidbody rigidbody) && distance != 0)
+            if (_cubes[i].TryGetComponent(out Rigidbody rigidbody) && distance != 0)
             {
                 rigidbody.AddForce(directionOfPush.normalized * forceImpulse / distance, ForceMode.Impulse);
             }

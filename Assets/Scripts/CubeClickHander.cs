@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CubeClickHander : MonoBehaviour
 {
-    [SerializeField] private CubeMaker _maker;
+    [SerializeField] private CubeSpawner _maker;
     [SerializeField] private CubesExploder _exploder;
     [SerializeField] private CubeInputDetector _inputDetector;
 
