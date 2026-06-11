@@ -22,7 +22,6 @@ public class CubeMaker : MonoBehaviour
 
         float currentChanceOfDivision = cube.ChanceOfDivision;
         float reductionFactor = 2;
-        float divider = 2;
 
         float numberOfCubes = Random.Range(_minCountOfCubes, _maxCountOfCubes);
 
@@ -30,11 +29,13 @@ public class CubeMaker : MonoBehaviour
         {
             Cube newCube = Instantiate(_cube, GetPositionOfCube(cube), Quaternion.identity);
 
-            newCube.transform.localScale = new Vector3(cube.transform.localScale.x / divider,
-                                             cube.transform.localScale.y / divider,
-                                             cube.transform.localScale.z / divider);
+            newCube.SetNewSize(cube);
 
             newCube.SetRandomColor();
+
+            newCube.IncreaseForceImpulse(cube);
+
+            newCube.IncreaseRadius(cube);
 
             newCube.SetChanceOfDivision(currentChanceOfDivision, reductionFactor);
 

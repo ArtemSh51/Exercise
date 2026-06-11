@@ -4,7 +4,6 @@ using UnityEngine;
 public class CubesExploder : MonoBehaviour
 {
     [SerializeField, Min(0)] private float _powerOfDiscardingCubes;
-    [SerializeField, Min(0)] private float _forceImpulse;
 
     public void ExplosionOfCreatedCubes(List<Cube> cubes, Cube cube)
     {
@@ -19,9 +18,9 @@ public class CubesExploder : MonoBehaviour
         }
     }
 
-    public void ExplosionOfPressedCube(Cube cube)
+    public void ExplosionOfPressedCube(Cube cube, float forceImpulse, float radius)
     {
-        Collider[] cubes = Physics.OverlapSphere(cube.transform.position, 20);
+        Collider[] cubes = Physics.OverlapSphere(cube.transform.position, radius);
 
         foreach (Collider currentCube in cubes)
         {
@@ -31,7 +30,7 @@ public class CubesExploder : MonoBehaviour
 
             if (currentCube.TryGetComponent(out Rigidbody rigidbody) && distance != 0)
             {
-                rigidbody.AddForce(directionOfPush.normalized * _forceImpulse / distance, ForceMode.Impulse);
+                rigidbody.AddForce(directionOfPush.normalized * forceImpulse / distance, ForceMode.Impulse);
             }
         }
     }

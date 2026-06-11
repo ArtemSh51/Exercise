@@ -24,7 +24,7 @@ public class CubeClickHander : MonoBehaviour
         }
         else
         {
-            _exploder.ExplosionOfPressedCube(cube);
+            _exploder.ExplosionOfPressedCube(cube, cube.ForceImpulse, cube.Radius);
         }
 
         _maker.RemoveCube(cube);
