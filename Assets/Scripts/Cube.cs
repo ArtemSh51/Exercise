@@ -6,7 +6,7 @@ public class Cube : MonoBehaviour
 
     public float TimeOfLife { get; private set; }
 
-    public bool IsPlatformTouched { get; set; }
+    public bool IsPlatformTouched { get; private set; }
 
     private void Awake()
     {
