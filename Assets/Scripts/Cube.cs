@@ -1,31 +1,53 @@
+using System;
 using UnityEngine;
+
+[RequireComponent(typeof(Renderer))]
 
 public class Cube : MonoBehaviour
 {
+    [SerializeField, Delayed] private float _minDisappearanceTime;
+    [SerializeField, Delayed] private float _maxDisappearanceTime;
+
+    public event Action<Cube> PlatformTouched;
+
     private Renderer _renderer;
+    private bool _isPlatformTouched;
 
     public float TimeOfLife { get; private set; }
 
-    public bool IsPlatformTouched { get; private set; }
+    private void OnValidate()
+    {
+        if (_minDisappearanceTime >= _maxDisappearanceTime)
+        {
+            _maxDisappearanceTime = _minDisappearanceTime + 1;
+        }
+    }
 
     private void Awake()
     {
         _renderer = GetComponent<Renderer>();
     }
 
-    public void ChangeColorToRandom()
+    private void OnCollisionEnter(Collision collision)
     {
-        _renderer.material.color = new Color(Random.value, Random.value, Random.value);
+        if (collision.collider.CompareTag("Platform") && _isPlatformTouched == false)
+        {
+            ChangeColorToRandom();
+            SetPlatformTouched();
+            SetTimeOfLife(UnityEngine.Random.Range(_minDisappearanceTime, _maxDisappearanceTime));
+
+            PlatformTouched?.Invoke(this);
+        }
     }
 
-    public void ChangeDefaultCubColor(Color defaultColor)
+    public void ChangeDefaultColor(Color defaultColor)
     {
         _renderer.material.color = defaultColor;
     }
 
     public void SetPlatformTouched()
     {
-        IsPlatformTouched = IsPlatformTouched ? false : true;
+        _isPlatformTouched = _isPlatformTouched ? false : true;
     }
 
     public void SetTimeOfLife(float timeOfLife)
@@ -38,5 +60,10 @@ public class Cube : MonoBehaviour
         }
 
         TimeOfLife = timeOfLife;
+    }
+    
+    private void ChangeColorToRandom()
+    {
+        _renderer.material.color = new Color(UnityEngine.Random.value, UnityEngine.Random.value, UnityEngine.Random.value);
     }
 }

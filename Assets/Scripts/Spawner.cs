@@ -4,7 +4,7 @@ using UnityEngine.Pool;
 
 public class Spawner : MonoBehaviour
 {
-    [SerializeField] private Cube _cube;
+    [SerializeField] private Cube _cubePrefab;
     [SerializeField] private int _defaultCountOfCubes;
     [SerializeField] private int _size;
 
@@ -12,7 +12,6 @@ public class Spawner : MonoBehaviour
     [SerializeField, Delayed] private float _maxX;
     [SerializeField, Delayed] private float _minZ;
     [SerializeField, Delayed] private float _maxZ;
-
     [SerializeField] private float _height;
     [SerializeField] private float _deltaTime;
 
@@ -36,7 +35,14 @@ public class Spawner : MonoBehaviour
     {
         _cubes = new ObjectPool<Cube>
         (
-            createFunc: () => Instantiate(_cube),
+            createFunc: () =>
+            {
+                Cube cube = Instantiate(_cubePrefab);
+
+                cube.PlatformTouched += HandleCubeTouched;
+
+                return cube;
+            },
 
             actionOnGet: (cube) =>
             {
@@ -47,16 +53,16 @@ public class Spawner : MonoBehaviour
 
             actionOnRelease: (cube) =>
             {
-                cube.ChangeDefaultCubColor(Color.white);
-
-                cube.transform.position = Vector3.zero;
-
-                cube.gameObject.SetActive(false);
-
-                cube.SetPlatformTouched();
+                ChangeStateOfCube(cube);
             },
 
-            actionOnDestroy: (cube) => Destroy(cube.gameObject),
+            actionOnDestroy: (cube) =>
+            {
+                cube.PlatformTouched -= HandleCubeTouched;
+
+                Destroy(cube.gameObject);
+            },
+
             collectionCheck: _hasCheck,
             defaultCapacity: _defaultCountOfCubes,
             maxSize: _size
@@ -68,9 +74,22 @@ public class Spawner : MonoBehaviour
         StartCoroutine(GetCube());
     }
 
-    public void ReleaseCube(Cube cube)
+    private void ChangeStateOfCube(Cube cube)
     {
-        _cubes.Release(cube);
+        cube.ChangeDefaultColor(Color.white);
+
+        cube.transform.position = Vector3.zero;
+
+        cube.transform.rotation = Quaternion.identity;
+
+        cube.gameObject.SetActive(false);
+
+        cube.SetPlatformTouched();
+    }
+
+    private void HandleCubeTouched(Cube cube)
+    {
+        StartCoroutine(ReturnCube(cube));
     }
 
     private IEnumerator GetCube()
@@ -82,5 +101,12 @@ public class Spawner : MonoBehaviour
 
             yield return wait;
         }
+    }
+
+    private IEnumerator ReturnCube(Cube cube)
+    {
+        yield return new WaitForSeconds(cube.TimeOfLife);
+
+        _cubes.Release(cube);
     }
 }

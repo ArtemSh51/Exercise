@@ -134,29 +134,13 @@ GameObject:
   - component: {fileID: 80059590}
   - component: {fileID: 80059589}
   - component: {fileID: 80059588}
-  - component: {fileID: 80059587}
   m_Layer: 0
   m_Name: Platform (1)
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &80059587
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 80059586}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6535ad79569340f46a543665716910f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _spawner: {fileID: 1746114467}
-  _minDisappearanceTime: 2
-  _maxDisappearanceTime: 5
 --- !u!65 &80059588
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -292,29 +276,13 @@ GameObject:
   - component: {fileID: 585916352}
   - component: {fileID: 585916351}
   - component: {fileID: 585916350}
-  - component: {fileID: 585916349}
   m_Layer: 0
   m_Name: Platform (3)
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &585916349
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 585916348}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6535ad79569340f46a543665716910f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _spawner: {fileID: 1746114467}
-  _minDisappearanceTime: 2
-  _maxDisappearanceTime: 5
 --- !u!65 &585916350
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -599,29 +567,13 @@ GameObject:
   - component: {fileID: 1513098446}
   - component: {fileID: 1513098445}
   - component: {fileID: 1513098444}
-  - component: {fileID: 1513098443}
   m_Layer: 0
   m_Name: Platform (4)
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1513098443
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1513098442}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6535ad79569340f46a543665716910f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _spawner: {fileID: 1746114467}
-  _minDisappearanceTime: 2
-  _maxDisappearanceTime: 5
 --- !u!65 &1513098444
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -720,29 +672,13 @@ GameObject:
   - component: {fileID: 1513248840}
   - component: {fileID: 1513248839}
   - component: {fileID: 1513248838}
-  - component: {fileID: 1513248837}
   m_Layer: 0
   m_Name: Platform (2)
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1513248837
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1513248836}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6535ad79569340f46a543665716910f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _spawner: {fileID: 1746114467}
-  _minDisappearanceTime: 2
-  _maxDisappearanceTime: 5
 --- !u!65 &1513248838
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -841,29 +777,13 @@ GameObject:
   - component: {fileID: 1665515923}
   - component: {fileID: 1665515922}
   - component: {fileID: 1665515921}
-  - component: {fileID: 1665515920}
   m_Layer: 0
   m_Name: Platform
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1665515920
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1665515919}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6535ad79569340f46a543665716910f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _spawner: {fileID: 1746114467}
-  _minDisappearanceTime: 2
-  _maxDisappearanceTime: 5
 --- !u!65 &1665515921
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -962,29 +882,13 @@ GameObject:
   - component: {fileID: 1720102947}
   - component: {fileID: 1720102946}
   - component: {fileID: 1720102945}
-  - component: {fileID: 1720102944}
   m_Layer: 0
   m_Name: Platform (5)
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1720102944
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1720102943}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6535ad79569340f46a543665716910f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _spawner: {fileID: 1746114467}
-  _minDisappearanceTime: 2
-  _maxDisappearanceTime: 5
 --- !u!65 &1720102945
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1100,7 +1004,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcd6c3b3d999678468d38588bcff9548, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cube: {fileID: 6216948641686943558, guid: 0462ae1f04cebbe43826016ab7b21dc4, type: 3}
+  _cubePrefab: {fileID: 6216948641686943558, guid: 0462ae1f04cebbe43826016ab7b21dc4, type: 3}
   _defaultCountOfCubes: 10
   _size: 10
   _minX: -20
