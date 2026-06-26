@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Renderer))]
@@ -13,7 +14,7 @@ public class Cube : MonoBehaviour
     private Renderer _renderer;
     private bool _isPlatformTouched;
 
-    public float TimeOfLife { get; private set; }
+    private float _timeOfLife;
 
     private void OnValidate()
     {
@@ -30,13 +31,13 @@ public class Cube : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.CompareTag("Platform") && _isPlatformTouched == false)
+        if (collision.collider.GetComponent<Platform>() != null && _isPlatformTouched == false)
         {
             ChangeColorToRandom();
             SetPlatformTouched();
             SetTimeOfLife(UnityEngine.Random.Range(_minDisappearanceTime, _maxDisappearanceTime));
 
-            PlatformTouched?.Invoke(this);
+            StartCoroutine(WaitWhile(this));
         }
     }
 
@@ -59,11 +60,18 @@ public class Cube : MonoBehaviour
             Debug.LogError("„исло может быть только положительным числом!");
         }
 
-        TimeOfLife = timeOfLife;
+        _timeOfLife = timeOfLife;
     }
     
     private void ChangeColorToRandom()
     {
         _renderer.material.color = new Color(UnityEngine.Random.value, UnityEngine.Random.value, UnityEngine.Random.value);
+    }
+
+    private IEnumerator WaitWhile(Cube cube)
+    {
+        yield return new WaitForSeconds(_timeOfLife);
+
+        PlatformTouched?.Invoke(this);
     }
 }

@@ -39,7 +39,7 @@ public class Spawner : MonoBehaviour
             {
                 Cube cube = Instantiate(_cubePrefab);
 
-                cube.PlatformTouched += HandleCubeTouched;
+                cube.PlatformTouched += ReturnCube;
 
                 return cube;
             },
@@ -58,7 +58,7 @@ public class Spawner : MonoBehaviour
 
             actionOnDestroy: (cube) =>
             {
-                cube.PlatformTouched -= HandleCubeTouched;
+                cube.PlatformTouched -= ReturnCube;
 
                 Destroy(cube.gameObject);
             },
@@ -71,7 +71,7 @@ public class Spawner : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(GetCube());
+        StartCoroutine(TakeCubeFromPool());
     }
 
     private void ChangeStateOfCube(Cube cube)
@@ -87,26 +87,20 @@ public class Spawner : MonoBehaviour
         cube.SetPlatformTouched();
     }
 
-    private void HandleCubeTouched(Cube cube)
+    private void ReturnCube(Cube cube)
     {
-        StartCoroutine(ReturnCube(cube));
+        _cubes.Release(cube);
     }
 
-    private IEnumerator GetCube()
+    private IEnumerator TakeCubeFromPool()
     {
         WaitForSeconds wait = new WaitForSeconds(_deltaTime);
 
-        while (true) {
+        while (true)
+        {
             Cube cube = _cubes.Get();
 
             yield return wait;
         }
-    }
-
-    private IEnumerator ReturnCube(Cube cube)
-    {
-        yield return new WaitForSeconds(cube.TimeOfLife);
-
-        _cubes.Release(cube);
     }
 }
