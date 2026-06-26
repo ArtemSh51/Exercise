@@ -2,48 +2,41 @@ using UnityEngine;
 
 public class Cube : MonoBehaviour
 {
-    private const int CoefficientOfChange = 2;
-
-    [SerializeField, Min(1)] private float _forceImpulse;
-    [SerializeField, Min(1)] private float _radius;
-
     private Renderer _renderer;
 
-    public float ChanceOfDivision { get; private set; } = 1;
+    public float TimeOfLife { get; private set; }
 
-    public float ForceImpulse => _forceImpulse;
-
-    public float Radius => _radius;
+    public bool IsPlatformTouched { get; set; }
 
     private void Awake()
     {
         _renderer = GetComponent<Renderer>();
     }
 
-    public void SetChanceOfDivision(float currentChanceOfDivision, float reductionFactor)
-    {
-        ChanceOfDivision = currentChanceOfDivision / reductionFactor;
-    }
-
-    public void SetRandomColor()
+    public void ChangeColorToRandom()
     {
         _renderer.material.color = new Color(Random.value, Random.value, Random.value);
     }
 
-    public void IncreaseForceImpulse(Cube cube)
+    public void ChangeDefaultCubColor(Color defaultColor)
     {
-        _forceImpulse = cube.ForceImpulse * CoefficientOfChange;
+        _renderer.material.color = defaultColor;
     }
 
-    public void IncreaseRadius(Cube cube)
+    public void SetPlatformTouched()
     {
-        _radius = cube.Radius * CoefficientOfChange;
+        IsPlatformTouched = IsPlatformTouched ? false : true;
     }
 
-    public void SetNewSize(Cube cube)
+    public void SetTimeOfLife(float timeOfLife)
     {
-        transform.localScale = new Vector3(cube.transform.localScale.x / CoefficientOfChange,
-                                           cube.transform.localScale.y / CoefficientOfChange,
-                                           cube.transform.localScale.z / CoefficientOfChange);
+        if (timeOfLife < 0)
+        {
+            timeOfLife = 0;
+
+            Debug.LogError("„исло может быть только положительным числом!");
+        }
+
+        TimeOfLife = timeOfLife;
     }
 }
