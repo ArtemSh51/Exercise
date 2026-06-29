@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -8,30 +9,17 @@ public class Spawner : MonoBehaviour
     [SerializeField] private int _defaultCountOfEnemies;
     [SerializeField] private int _poolSize;
 
-    [SerializeField, Delayed] private float _minX;
-    [SerializeField, Delayed] private float _maxX;
-    [SerializeField, Delayed] private float _minZ;
-    [SerializeField, Delayed] private float _maxZ;
-
     [SerializeField, Delayed] private int _minRotationValueInDegrees = 0;
     [SerializeField, Delayed] private int _maxRotationValueInDegrees = 360;
 
     [SerializeField] private float _deltaTime;
 
+    [SerializeField] private List<Transform> _spawnPoints;
+
     private ObjectPool<Enemy> _enemies;
 
     private void OnValidate()
     {
-        if (_minX >= _maxX)
-        {
-            _maxX = _minX + 1;
-        }
-
-        if (_minX >= _maxX)
-        {
-            _maxX = _maxX + 1;
-        }
-
         if (_minRotationValueInDegrees >= _maxRotationValueInDegrees)
         {
             _maxRotationValueInDegrees = _minRotationValueInDegrees + 1;
@@ -101,12 +89,11 @@ public class Spawner : MonoBehaviour
     {
         const int DivisorOfHeighOfEnemy = 2;
 
-        float xRandomValue = Random.Range(_minX, _maxX + 1);
-        float zRandomValue = Random.Range(_minZ, _maxZ + 1);
+        Transform randomSpawnPoint = _spawnPoints[Random.Range(0, _spawnPoints.Count)];
 
         float yValue = transform.position.y + enemy.transform.localScale.y / DivisorOfHeighOfEnemy;
 
-        enemy.transform.position = new Vector3(xRandomValue, yValue, zRandomValue);
+        enemy.transform.position = new Vector3(randomSpawnPoint.position.x, yValue, randomSpawnPoint.position.z);
     }
 
     private void SetRotation(Enemy enemy)
