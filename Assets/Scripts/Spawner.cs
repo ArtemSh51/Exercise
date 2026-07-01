@@ -6,25 +6,15 @@ using UnityEngine.Pool;
 public class Spawner : MonoBehaviour
 {
     [SerializeField] private Enemy _enemyPrefab;
+    [SerializeField] private List<Transform> _tragets;
+    [SerializeField] private Transform _area;
+
     [SerializeField] private int _defaultCountOfEnemies;
     [SerializeField] private int _poolSize;
 
-    [SerializeField, Delayed] private int _minRotationValueInDegrees = 0;
-    [SerializeField, Delayed] private int _maxRotationValueInDegrees = 360;
-
     [SerializeField] private float _deltaTime;
 
-    [SerializeField] private List<Transform> _spawnPoints;
-
     private ObjectPool<Enemy> _enemies;
-
-    private void OnValidate()
-    {
-        if (_minRotationValueInDegrees >= _maxRotationValueInDegrees)
-        {
-            _maxRotationValueInDegrees = _minRotationValueInDegrees + 1;
-        }
-    }
 
     private void Awake()
     {
@@ -32,7 +22,7 @@ public class Spawner : MonoBehaviour
         (
             createFunc: () => Instantiate(_enemyPrefab),
 
-            actionOnGet: (enemy) => CustomizeEnemyTakenFromPpool(enemy),
+            actionOnGet: (enemy) => CustomizeEnemyTakenFromPool(enemy),
 
             actionOnRelease: (enemy) => CustomizeEnemyReturnedToPool(enemy),
 
@@ -63,7 +53,7 @@ public class Spawner : MonoBehaviour
         }
     }
 
-    private void CustomizeEnemyTakenFromPpool(Enemy enemy)
+    private void CustomizeEnemyTakenFromPool(Enemy enemy)
     {
         enemy.gameObject.SetActive(true);
 
@@ -71,7 +61,7 @@ public class Spawner : MonoBehaviour
 
         SetPosition(enemy);
 
-        SetRotation(enemy);
+        enemy.SetTarget(_tragets[Random.Range(0, _tragets.Count)].transform);
     }
 
     private void CustomizeEnemyReturnedToPool(Enemy enemy)
@@ -87,20 +77,16 @@ public class Spawner : MonoBehaviour
 
     private void SetPosition(Enemy enemy)
     {
-        const int DivisorOfHeighOfEnemy = 2;
+        float yValue = _area.position.y + GetHalfObjectHeight(_area) + GetHalfObjectHeight(enemy.transform);
 
-        Transform randomSpawnPoint = _spawnPoints[Random.Range(0, _spawnPoints.Count)];
-
-        float yValue = transform.position.y + enemy.transform.localScale.y / DivisorOfHeighOfEnemy;
-
-        enemy.transform.position = new Vector3(randomSpawnPoint.position.x, yValue, randomSpawnPoint.position.z);
+        enemy.transform.position = new Vector3(transform.position.x, yValue, transform.position.z);
     }
 
-    private void SetRotation(Enemy enemy)
+    private float GetHalfObjectHeight(Transform gameObject)
     {
-        float randomRotationValueInDegrees = Random.Range(_minRotationValueInDegrees, _maxRotationValueInDegrees);
+        const int DivisorOfHeightOfObject = 2;
 
-        enemy.transform.rotation = Quaternion.Euler(0, randomRotationValueInDegrees, 0);
+        return gameObject.localScale.y / DivisorOfHeightOfObject;
     }
 
     private void ReturnEnemy(Enemy enemy)
