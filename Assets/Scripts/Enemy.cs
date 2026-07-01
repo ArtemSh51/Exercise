@@ -34,9 +34,9 @@ public class Enemy : MonoBehaviour
     {
         Vector3 targetPosition = _target.position;
 
-        targetPosition.y = 0;
+        targetPosition.y = transform.position.y;
 
-        transform.right = targetPosition;
+        transform.LookAt(targetPosition);
     }
 
     private IEnumerator SpecifyLifetime()
