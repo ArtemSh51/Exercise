@@ -60,13 +60,13 @@ class Gun : MonoBehaviour
 
         while (true)
         {
-            TakeBullet();
+            LaunchBullet();
 
             yield return wait;
         }
     }
 
-    private void TakeBullet()
+    private void LaunchBullet()
     {
         Vector3 targetDirection = (_target.position - transform.position).normalized;
 
