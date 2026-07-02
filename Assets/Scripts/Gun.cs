@@ -13,24 +13,18 @@ class Gun : MonoBehaviour
     [SerializeField] private int _defaultCountOfBullets;
     [SerializeField] private int _sizePool;
 
-    private ObjectPool<Bullet> _bullets;
+    private ObjectPool<Bullet> _bulletPool;
 
     private void Awake()
     {
-        _bullets = new ObjectPool<Bullet>
+        _bulletPool = new ObjectPool<Bullet>
         (
             createFunc: () => Instantiate(_bulletPrefab),
-            
             actionOnGet: (bullet) => PrepareBulletBeforeUse(bullet),
-            
             actionOnRelease: (bullet) => PrepareBulletBeforeReturning(bullet),
-
             actionOnDestroy: (bullet) => Destroy(bullet.gameObject),
-
             collectionCheck: true,
-
             defaultCapacity: _defaultCountOfBullets,
-
             maxSize: _sizePool
         );
     }
@@ -76,17 +70,13 @@ class Gun : MonoBehaviour
     {
         Vector3 targetDirection = (_target.position - transform.position).normalized;
 
-        Bullet newBullet = _bullets.Get();
+        Bullet newBullet = _bulletPool.Get();
 
-        if (newBullet.TryGetComponent(out Rigidbody rigidbody))
-        {
-            rigidbody.transform.up = targetDirection;
-            rigidbody.velocity = targetDirection * _force;
-        }
+        newBullet.SetFlightForce(targetDirection, _force);
     }
 
     private void ReturnBullet(Bullet bullet)
     {
-        _bullets.Release(bullet);
+        _bulletPool.Release(bullet);
     }
 }
