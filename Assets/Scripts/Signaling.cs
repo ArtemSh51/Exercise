@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
@@ -10,7 +11,8 @@ public class Signaling : MonoBehaviour
 
     private AudioSource _audio;
 
-    private bool _isInside;
+    private Coroutine _gradualIncreaseInVolume;
+    private Coroutine _gradualReduceInVolume;
 
     private float _currentVolume;
 
@@ -19,42 +21,35 @@ public class Signaling : MonoBehaviour
         _audio = GetComponent<AudioSource>();
     }
 
-    private void Update()
+    public void IncreaseVolume()
     {
-        if (_isInside == false)
-        {
-            SetSoundVolume(_minVolume);
+        _audio.Play();
 
-            if (_audio.volume == _minVolume)
-            {
-                _audio.Stop();
-            }
+        if (_gradualReduceInVolume != null)
+        {
+            StopCoroutine(_gradualReduceInVolume);
+
+            _gradualReduceInVolume = null;
+        }
+
+        if (_gradualIncreaseInVolume == null)
+        {
+            _gradualIncreaseInVolume = StartCoroutine(IncreaseVolumeGradually());
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void ReduceAlarmVolume()
     {
-        if (other.TryGetComponent(out Thief _))
+        if (_gradualIncreaseInVolume != null)
         {
-            _isInside = true;
+            StopCoroutine(_gradualIncreaseInVolume);
 
-            _audio.Play();
+            _gradualIncreaseInVolume = null;
         }
-    }
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.TryGetComponent(out Thief _))
+        if (_gradualReduceInVolume == null)
         {
-            SetSoundVolume(_maxVolume);
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.TryGetComponent(out Thief _))
-        {
-            _isInside = false;
+            _gradualReduceInVolume = StartCoroutine(ReduceVolumeGradually());
         }
     }
 
@@ -63,5 +58,27 @@ public class Signaling : MonoBehaviour
         _currentVolume = Mathf.MoveTowards(_currentVolume, target, _volumeDelta * Time.deltaTime);
 
         _audio.volume = _currentVolume;
+    }
+
+    private IEnumerator ReduceVolumeGradually()
+    {
+        while (_audio.volume > _minVolume)
+        {
+            SetSoundVolume(_minVolume);
+
+            yield return null;
+        }
+
+        _audio.Stop();
+    }
+
+    private IEnumerator IncreaseVolumeGradually()
+    {
+        while (_audio.volume < _maxVolume)
+        {
+            SetSoundVolume(_maxVolume);
+
+            yield return null;
+        }
     }
 }
