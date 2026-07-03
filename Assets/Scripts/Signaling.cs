@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -14,8 +15,6 @@ public class Signaling : MonoBehaviour
     private Coroutine _gradualIncreaseInVolume;
     private Coroutine _gradualReduceInVolume;
 
-    private float _currentVolume;
-
     private void Awake()
     {
         _audio = GetComponent<AudioSource>();
@@ -25,58 +24,39 @@ public class Signaling : MonoBehaviour
     {
         _audio.Play();
 
-        if (_gradualReduceInVolume != null)
-        {
-            StopCoroutine(_gradualReduceInVolume);
-
-            _gradualReduceInVolume = null;
-        }
-
-        if (_gradualIncreaseInVolume == null)
-        {
-            _gradualIncreaseInVolume = StartCoroutine(IncreaseVolumeGradually());
-        }
+        ActivateCoroutine(ref _gradualIncreaseInVolume, ref _gradualReduceInVolume, _maxVolume);
     }
 
     public void ReduceAlarmVolume()
     {
-        if (_gradualIncreaseInVolume != null)
-        {
-            StopCoroutine(_gradualIncreaseInVolume);
+        ActivateCoroutine(ref _gradualReduceInVolume, ref _gradualIncreaseInVolume, _minVolume);
 
-            _gradualIncreaseInVolume = null;
-        }
-
-        if (_gradualReduceInVolume == null)
+        if (_audio.volume == _minVolume)
         {
-            _gradualReduceInVolume = StartCoroutine(ReduceVolumeGradually());
+            _audio.Stop();
         }
     }
 
-    private void SetSoundVolume(float target)
+    private void ActivateCoroutine(ref Coroutine coroutineToStart, ref Coroutine coroutineToStop, float target)
     {
-        _currentVolume = Mathf.MoveTowards(_currentVolume, target, _volumeDelta * Time.deltaTime);
-
-        _audio.volume = _currentVolume;
-    }
-
-    private IEnumerator ReduceVolumeGradually()
-    {
-        while (_audio.volume > _minVolume)
+        if (coroutineToStop != null)
         {
-            SetSoundVolume(_minVolume);
+            StopCoroutine(coroutineToStop);
 
-            yield return null;
+            coroutineToStop = null;
         }
 
-        _audio.Stop();
+        if (coroutineToStart == null)
+        {
+            coroutineToStart = StartCoroutine(ChangeVolumeGradually(target));
+        }
     }
 
-    private IEnumerator IncreaseVolumeGradually()
+    private IEnumerator ChangeVolumeGradually(float target)
     {
-        while (_audio.volume < _maxVolume)
+        while (_audio.volume != target)
         {
-            SetSoundVolume(_maxVolume);
+            _audio.volume = Mathf.MoveTowards(_audio.volume, target, _volumeDelta * Time.deltaTime);
 
             yield return null;
         }

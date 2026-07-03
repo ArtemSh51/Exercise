@@ -8,11 +8,17 @@ public class CollisionHandler : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        AreaCrossed?.Invoke();
+        if (other.gameObject.TryGetComponent(out Thief _))
+        {
+            AreaCrossed?.Invoke();
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        AreaAbandoned?.Invoke();
+        if (other.gameObject.TryGetComponent(out Thief _))
+        {
+            AreaAbandoned?.Invoke();
+        }
     }
 }
