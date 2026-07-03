@@ -12,8 +12,7 @@ public class Signaling : MonoBehaviour
 
     private AudioSource _audio;
 
-    private Coroutine _gradualIncreaseInVolume;
-    private Coroutine _gradualReduceInVolume;
+    private Coroutine _coroutine;
 
     private void Awake()
     {
@@ -24,31 +23,26 @@ public class Signaling : MonoBehaviour
     {
         _audio.Play();
 
-        ActivateCoroutine(ref _gradualIncreaseInVolume, ref _gradualReduceInVolume, _maxVolume);
+        ActivateCoroutine(_maxVolume);
     }
 
     public void ReduceAlarmVolume()
     {
-        ActivateCoroutine(ref _gradualReduceInVolume, ref _gradualIncreaseInVolume, _minVolume);
-
-        if (_audio.volume == _minVolume)
-        {
-            _audio.Stop();
-        }
+        ActivateCoroutine(_minVolume);
     }
 
-    private void ActivateCoroutine(ref Coroutine coroutineToStart, ref Coroutine coroutineToStop, float target)
+    private void ActivateCoroutine(float target)
     {
-        if (coroutineToStop != null)
+        if (_coroutine != null)
         {
-            StopCoroutine(coroutineToStop);
+            StopCoroutine(_coroutine);
 
-            coroutineToStop = null;
+            _coroutine = null;
         }
 
-        if (coroutineToStart == null)
+        if (_coroutine == null)
         {
-            coroutineToStart = StartCoroutine(ChangeVolumeGradually(target));
+            _coroutine = StartCoroutine(ChangeVolumeGradually(target));
         }
     }
 
@@ -59,6 +53,11 @@ public class Signaling : MonoBehaviour
             _audio.volume = Mathf.MoveTowards(_audio.volume, target, _volumeDelta * Time.deltaTime);
 
             yield return null;
+        }
+
+        if (_audio.volume == _minVolume)
+        {
+            _audio.Stop();
         }
     }
 }
