@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class CoinSpowner : MonoBehaviour
+public class CoinSpawner : MonoBehaviour
 {
     [SerializeField] private Coin _coinPrefab;
     [SerializeField] private List<Transform> _points;
@@ -53,12 +53,16 @@ public class CoinSpowner : MonoBehaviour
 
     private void SetUpCoinBeforeUse(Coin coin)
     {
+        coin.Taken += ReturnCoin;
+
         coin.gameObject.SetActive(true);
     }
 
     private void SetCoinBeforeReturning(Coin coin)
     {
         coin.gameObject.SetActive(false);
+
+        coin.Taken -= ReturnCoin;
 
         coin.transform.position = Vector3.zero;
 
