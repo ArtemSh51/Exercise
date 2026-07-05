@@ -10,5 +10,10 @@ public class ItemPicker : MonoBehaviour
         {
             coin.Return();
         }
+
+        if (collision.TryGetComponent(out HealingPotion healingPotion))
+        {
+            healingPotion.HealCharacter(transform);
+        }
     }
 }

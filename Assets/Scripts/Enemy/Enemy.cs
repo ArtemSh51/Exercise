@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Patroler), typeof(Rotator))]
+[RequireComponent(typeof(Patroler), typeof(Rotator), typeof(Health))]
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private Patroler _patrol;
@@ -15,6 +15,8 @@ public class Enemy : MonoBehaviour
     private void Update()
     {
         _rotator.TurnByY(_patrol.Direction);
+
+        _patrol.PursueTarget();
     }
 
     private void FixedUpdate()

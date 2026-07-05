@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Mover), typeof(AnimationController), typeof(ItemPicker))]
-[RequireComponent(typeof(Rotator), typeof(Inputer), typeof(HealthHandler))]
+[RequireComponent(typeof(Rotator), typeof(Inputer), typeof(Health))]
 public class Player : MonoBehaviour
 {
     [SerializeField] private Mover _mover;
@@ -9,7 +9,6 @@ public class Player : MonoBehaviour
     [SerializeField] private ItemPicker _itemPicker;
     [SerializeField] private Rotator _rotator;
     [SerializeField] private Inputer _inputer;
-    [SerializeField] private HealthHandler _healthManager;
 
     private void Awake()
     {
@@ -17,7 +16,6 @@ public class Player : MonoBehaviour
         _animator = GetComponent<AnimationController>();
         _itemPicker = GetComponent<ItemPicker>();
         _rotator = GetComponent<Rotator>();
-        _healthManager = GetComponent<HealthHandler>();
     }
 
     private void Update()
