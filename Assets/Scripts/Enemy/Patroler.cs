@@ -7,6 +7,8 @@ public class Patroler : MonoBehaviour
 
     private float _direction = 1;
 
+    public float Direction => _direction;
+
     public void Move()
     {
         if (IsStandingOnEdgeOfPlatform())
@@ -14,7 +16,7 @@ public class Patroler : MonoBehaviour
             _direction *= -1;
         }
 
-        transform.position += transform.right * _direction * _speed * Time.fixedDeltaTime;
+        transform.position += Vector3.right * _direction * _speed * Time.fixedDeltaTime;
     }
 
     private bool IsStandingOnEdgeOfPlatform()

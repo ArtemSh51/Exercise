@@ -3,8 +3,6 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Mover : MonoBehaviour
 {
-    private const string Horizontal = nameof(Horizontal);
-
     [SerializeField] private float _speedOfMovement;
     [SerializeField] private float _jumpingForce;
     [SerializeField] private float _lengthRay;
@@ -30,10 +28,8 @@ public class Mover : MonoBehaviour
         _inputer.ButtonPressed -= Jump;
     }
 
-    public void Move()
+    public void Move(float moveHorizontal)
     {
-        float moveHorizontal = PressMotionButton();
-
         transform.position += Vector3.right * moveHorizontal * _speedOfMovement * Time.deltaTime;
     }
 
@@ -51,11 +47,6 @@ public class Mover : MonoBehaviour
         {
             IsGrounded = false;
         }
-    }
-
-    public float PressMotionButton()
-    {
-        return Input.GetAxisRaw(Horizontal);
     }
 
     public RaycastHit2D GetRay()

@@ -2,19 +2,19 @@ using UnityEngine;
 
 public class Respawner : MonoBehaviour
 {
-    [SerializeField] private HealthManager _healthManager;
+    [SerializeField] private HealthHandler _healthHandler;
     [SerializeField] private GroundChecker _groundChecker;
 
     private void OnEnable()
     {
-        _healthManager.PlayerKilled += ReturnToRespawnPoint;
+        _healthHandler.PlayerKilled += ReturnToRespawnPoint;
 
         _groundChecker.PlayerTouchedTrap += ReturnToRespawnPoint;
     }
 
     private void OnDisable()
     {
-        _healthManager.PlayerKilled -= ReturnToRespawnPoint;
+        _healthHandler.PlayerKilled -= ReturnToRespawnPoint;
 
         _groundChecker.PlayerTouchedTrap -= ReturnToRespawnPoint;
     }
@@ -22,5 +22,7 @@ public class Respawner : MonoBehaviour
     private void ReturnToRespawnPoint(Transform player)
     {
         player.position = transform.position;
+
+        _healthHandler.Restore();
     }
 }

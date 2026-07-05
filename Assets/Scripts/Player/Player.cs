@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Mover), typeof(AnimationController), typeof(ItemPicker))]
-[RequireComponent(typeof(Rotator), typeof(Inputer), typeof(HealthManager))]
+[RequireComponent(typeof(Rotator), typeof(Inputer), typeof(HealthHandler))]
 public class Player : MonoBehaviour
 {
     [SerializeField] private Mover _mover;
@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     [SerializeField] private ItemPicker _itemPicker;
     [SerializeField] private Rotator _rotator;
     [SerializeField] private Inputer _inputer;
-    [SerializeField] private HealthManager _healthManager;
+    [SerializeField] private HealthHandler _healthManager;
 
     private void Awake()
     {
@@ -17,18 +17,20 @@ public class Player : MonoBehaviour
         _animator = GetComponent<AnimationController>();
         _itemPicker = GetComponent<ItemPicker>();
         _rotator = GetComponent<Rotator>();
-        _healthManager = GetComponent<HealthManager>();
+        _healthManager = GetComponent<HealthHandler>();
     }
 
     private void Update()
     {
-        _mover.Move();
+        float moveHorizontal = _inputer.GetHorizontalMovementValue();
+
+        _mover.Move(moveHorizontal);
 
         _inputer.PressButtonJump();
 
-        _rotator.TurnByY(_mover.PressMotionButton());
+        _rotator.TurnByY(moveHorizontal);
 
-        _animator.StartWalkingAnimation(_mover.PressMotionButton());
+        _animator.StartWalkingAnimation(moveHorizontal);
         _animator.StartJumpingAnimation(_mover.IsGrounded);
     }
 }

@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Inputer : MonoBehaviour
 {
+    private const string Horizontal = nameof(Horizontal);
+
     public event Action ButtonPressed;
 
     public void PressButtonJump()
@@ -11,5 +13,11 @@ public class Inputer : MonoBehaviour
         {
             ButtonPressed?.Invoke();
         }
+
+    }
+
+    public float GetHorizontalMovementValue()
+    {
+        return Input.GetAxisRaw(Horizontal);
     }
 }

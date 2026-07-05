@@ -1,4 +1,4 @@
 public interface IDamageable
 {
-    void Kill();
+    void TakeDamage(float amount);
 }
