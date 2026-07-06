@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class HealingPotion : MonoBehaviour
+public class HealingPotion : MonoBehaviour, IPickableWithPicker
 {
     [SerializeField] private int _healthGainFromTreatment;
 
-    public void HealCharacter(Transform character)
+    public void PickUp(Transform character)
     {
         if (character.TryGetComponent(out IRecoverable recoverable))
         {

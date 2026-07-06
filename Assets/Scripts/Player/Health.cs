@@ -18,7 +18,7 @@ public class Health : MonoBehaviour, IDamageable, IRecoverable
 
     public void TakeDamage(float amount)
     {
-        _value -= amount;
+        _value = Mathf.Clamp(_value -  amount, 0, _maxValue);
 
         if (_value <= 0)
         {
@@ -33,14 +33,12 @@ public class Health : MonoBehaviour, IDamageable, IRecoverable
 
     public void Treat(int healthGainFromTreatment)
     {
-        if (_value + healthGainFromTreatment <= _maxValue)
+        if (healthGainFromTreatment <= 0)
         {
-            _value += healthGainFromTreatment;
+            healthGainFromTreatment = 0;
         }
-        else
-        {
-            _value = _maxValue;
-        }
+
+        _value = Mathf.Clamp(_value + healthGainFromTreatment, 0, _maxValue);
     }
 
     private void Kill()

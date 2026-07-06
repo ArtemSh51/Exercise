@@ -3,7 +3,7 @@ using UnityEngine;
 public class Respawner : MonoBehaviour
 {
     [SerializeField] private Health _healthHandler;
-    [SerializeField] private GroundChecker _groundChecker;
+    [SerializeField] private TrapChecker _groundChecker;
     [SerializeField] private bool _canRespawn;
 
     private void OnEnable()

@@ -6,14 +6,14 @@ public class ItemPicker : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent(out Coin coin))
+        if (collision.TryGetComponent(out IPickable pickable))
         {
-            coin.Return();
+            pickable.PickUp();
         }
 
-        if (collision.TryGetComponent(out HealingPotion healingPotion))
+        if (collision.TryGetComponent(out IPickableWithPicker pickableWithPicker))
         {
-            healingPotion.HealCharacter(transform);
+            pickableWithPicker.PickUp(transform);
         }
     }
 }

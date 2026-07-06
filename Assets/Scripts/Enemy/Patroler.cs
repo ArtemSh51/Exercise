@@ -1,33 +1,32 @@
+using System.Collections;
 using UnityEngine;
 
 public class Patroler : MonoBehaviour
 {
-    [SerializeField] private float _speed;
     [SerializeField] private float _rayLength;
+    [SerializeField] private float _timeOfPursuit;
 
-    [SerializeField] private Transform _target;
-    [SerializeField] private float _distanceToTarget;
+    private float _patrolDirection = 1;
 
-    private float _direction = 1;
+    private Coroutine _coroutine;
 
-    public float Direction => _direction;
-
-    public void Move()
+    public float GetPatrolDirection(Transform target, bool isPlayerVisible)
     {
         if (IsStandingOnEdgeOfPlatform())
         {
-            _direction *= -1;
+            _patrolDirection *= -1;
+
+            if (_coroutine != null)
+            {
+                _coroutine = null;
+            }
         }
-
-        transform.position += Vector3.right * _direction * _speed * Time.fixedDeltaTime;
-    }
-
-    public void PursueTarget()
-    {
-        if (IsDetectedTarget() && IsStandingOnEdgeOfPlatform() == false)
+        else if (isPlayerVisible && _coroutine == null)
         {
-            _direction = Mathf.Sign(_target.position.x - transform.position.x);
+            _coroutine = StartCoroutine(ChaseTarget(target));
         }
+
+        return _patrolDirection;
     }
 
     private bool IsStandingOnEdgeOfPlatform()
@@ -35,8 +34,19 @@ public class Patroler : MonoBehaviour
         return Physics2D.Raycast(transform.position, -transform.up, _rayLength) ? false : true;
     }
 
-    private bool IsDetectedTarget()
+    private IEnumerator ChaseTarget(Transform target)
     {
-        return (_target.position - transform.position).sqrMagnitude <= _distanceToTarget * _distanceToTarget;
+        float currentTime = 0;
+
+        while (currentTime <= _timeOfPursuit)
+        {
+            float difference = Mathf.Sign(target.position.x - transform.position.x);
+
+            _patrolDirection = difference;
+
+            currentTime += Time.deltaTime;
+
+            yield return null;
+        }
     }
 }

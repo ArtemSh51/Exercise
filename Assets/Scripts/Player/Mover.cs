@@ -1,56 +1,22 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
 public class Mover : MonoBehaviour
 {
     [SerializeField] private float _speedOfMovement;
     [SerializeField] private float _jumpingForce;
-    [SerializeField] private float _lengthRay;
-
-    private Rigidbody2D _rigidbody;
-    private Inputer _inputer;
-
-    public bool IsGrounded { get; private set; }
-
-    private void Awake()
-    {
-        _rigidbody = GetComponent<Rigidbody2D>();
-        _inputer = GetComponent<Inputer>();
-    }
-
-    private void OnEnable()
-    {
-        _inputer.ButtonPressed += Jump;
-    }
-
-    private void OnDisable()
-    {
-        _inputer.ButtonPressed -= Jump;
-    }
+    [SerializeField] private Rigidbody2D _rigidbody;
 
     public void Move(float moveHorizontal)
     {
-        transform.position += Vector3.right * moveHorizontal * _speedOfMovement * Time.deltaTime;
+        Vector2 direction = new Vector2(_speedOfMovement * moveHorizontal, _rigidbody.velocity.y);
+        _rigidbody.velocity = direction;
     }
 
-    public void Jump()
+    public void Jump(bool isGrounded)
     {
-        RaycastHit2D hit = GetRay();
-
-        if (hit && hit.collider.TryGetComponent(out Ground _))
+        if (isGrounded)
         {
-            IsGrounded = true;
-
-            _rigidbody.AddForce(transform.up * _jumpingForce, ForceMode2D.Impulse);
+            _rigidbody.AddForce(Vector2.up * _jumpingForce, ForceMode2D.Impulse);
         }
-        else if(hit.collider == null)
-        {
-            IsGrounded = false;
-        }
-    }
-
-    public RaycastHit2D GetRay()
-    {
-        return Physics2D.Raycast(transform.position, Vector2.down, _lengthRay);
     }
 }

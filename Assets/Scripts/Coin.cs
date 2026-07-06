@@ -1,12 +1,9 @@
-using System;
 using UnityEngine;
 
-public class Coin : MonoBehaviour
+public class Coin : MonoBehaviour, IPickable
 {
-    public Action<Coin> Taken;
-
-    public void Return()
+    public void PickUp()
     {
-        Taken?.Invoke(this);
+        gameObject.SetActive(false);
     }
 }

@@ -1,26 +1,18 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Patroler), typeof(Rotator), typeof(Health))]
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private Patroler _patrol;
     [SerializeField] private Rotator _rotator;
-
-    private void Awake()
-    {
-        _patrol = GetComponent<Patroler>();
-        _rotator = GetComponent<Rotator>();
-    }
+    [SerializeField] private EnemyMover _mover;
+    [SerializeField] private Vision _vision;
+    [SerializeField] private Patroler _patroler;
 
     private void Update()
     {
-        _rotator.TurnByY(_patrol.Direction);
+        float direction = _patroler.GetPatrolDirection(_vision.GetTargetPosition(), _vision.IsPlayerVisible());
 
-        _patrol.PursueTarget();
-    }
+        _rotator.TurnByY(direction);
 
-    private void FixedUpdate()
-    {
-        _patrol.Move();
+        _mover.Move(direction);
     }
 }

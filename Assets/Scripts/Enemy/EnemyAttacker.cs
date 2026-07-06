@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Attacker : MonoBehaviour
+public class EnemyAttacker : MonoBehaviour
 {
     [SerializeField] private float _damage;
     [SerializeField] private float _lenghtRay;
@@ -16,21 +16,18 @@ public class Attacker : MonoBehaviour
     {
         WaitForSeconds wait = new WaitForSeconds(_deltaTime);
 
+        RaycastHit2D hit;
+
         while (true)
         {
-            DealDamage();
+            hit = Physics2D.Raycast(transform.position, transform.right, _lenghtRay);
+
+            if (hit && hit.collider.TryGetComponent(out IDamageable damageable))
+            {
+                damageable.TakeDamage(_damage);
+            }
 
             yield return wait;
-        }
-    }
-
-    private void DealDamage()
-    {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, -transform.right, _lenghtRay);
-
-        if (hit && hit.collider.TryGetComponent(out IDamageable damageable))
-        {
-            damageable.TakeDamage(_damage);
         }
     }
 }
