@@ -2342,6 +2342,7 @@ GameObject:
   - component: {fileID: 234852188}
   - component: {fileID: 234852187}
   - component: {fileID: 234852189}
+  - component: {fileID: 234852190}
   m_Layer: 0
   m_Name: Enemy2
   m_TagString: Untagged
@@ -2474,7 +2475,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rayLength: 3
-  _timeOfPursuit: 2
 --- !u!114 &234852180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2490,7 +2490,9 @@ MonoBehaviour:
   _rotator: {fileID: 234852189}
   _mover: {fileID: 234852186}
   _vision: {fileID: 234852188}
-  _patroler: {fileID: 234852179}
+  _patroller: {fileID: 234852179}
+  _chaser: {fileID: 234852190}
+  _attacker: {fileID: 234852187}
 --- !u!114 &234852181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2505,7 +2507,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 2
   _lenghtRay: 2
-  _deltaTime: 1
+  _deltaTime: 3
 --- !u!50 &234852182
 Rigidbody2D:
   serializedVersion: 4
@@ -2612,8 +2614,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da77b540589783b4bbec087a75f3aca6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rightAngle: 180
-  _leftAngle: 0
+  _rightAngle: 0
+  _leftAngle: 180
+--- !u!114 &234852190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 234852174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ac577947491b19419683593bd1cb456, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _timeOfPursuit: 4
 --- !u!1 &249456680
 GameObject:
   m_ObjectHideFlags: 0
@@ -6961,7 +6976,7 @@ Transform:
   m_GameObject: {fileID: 760787965}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -18.91, y: 0.24, z: 0}
+  m_LocalPosition: {x: -19.05, y: 0.24, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7664,8 +7679,8 @@ GameObject:
   - component: {fileID: 797861370}
   - component: {fileID: 797861371}
   - component: {fileID: 797861373}
-  - component: {fileID: 797861372}
   - component: {fileID: 797861374}
+  - component: {fileID: 797861375}
   m_Layer: 0
   m_Name: Enemy1
   m_TagString: Untagged
@@ -7798,7 +7813,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rayLength: 3
-  _timeOfPursuit: 2
 --- !u!114 &797861365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7814,7 +7828,9 @@ MonoBehaviour:
   _rotator: {fileID: 797861374}
   _mover: {fileID: 797861371}
   _vision: {fileID: 797861373}
-  _patroler: {fileID: 797861364}
+  _patroller: {fileID: 797861364}
+  _chaser: {fileID: 797861375}
+  _attacker: {fileID: 797861366}
 --- !u!114 &797861366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7829,7 +7845,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 2
   _lenghtRay: 2
-  _deltaTime: 1
+  _deltaTime: 3
 --- !u!50 &797861367
 Rigidbody2D:
   serializedVersion: 4
@@ -7896,21 +7912,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 2
   _rayLength: 2
---- !u!114 &797861372
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 797861359}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ede16aa121051474cb4da63a185e7ae6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _damage: 2
-  _lenghtRay: 2
-  _deltaTime: 1
 --- !u!114 &797861373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7936,8 +7937,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da77b540589783b4bbec087a75f3aca6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rightAngle: 180
-  _leftAngle: 0
+  _rightAngle: 0
+  _leftAngle: 180
+--- !u!114 &797861375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 797861359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ac577947491b19419683593bd1cb456, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _timeOfPursuit: 4
 --- !u!1 &801952547
 GameObject:
   m_ObjectHideFlags: 0
@@ -8326,6 +8340,7 @@ GameObject:
   - component: {fileID: 861732475}
   - component: {fileID: 861732474}
   - component: {fileID: 861732476}
+  - component: {fileID: 861732477}
   m_Layer: 0
   m_Name: Enemy3
   m_TagString: Untagged
@@ -8458,7 +8473,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rayLength: 3
-  _timeOfPursuit: 2
 --- !u!114 &861732467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8474,7 +8488,9 @@ MonoBehaviour:
   _rotator: {fileID: 861732476}
   _mover: {fileID: 861732473}
   _vision: {fileID: 861732475}
-  _patroler: {fileID: 861732466}
+  _patroller: {fileID: 861732466}
+  _chaser: {fileID: 861732477}
+  _attacker: {fileID: 861732468}
 --- !u!114 &861732468
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8489,7 +8505,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 2
   _lenghtRay: 2
-  _deltaTime: 1
+  _deltaTime: 3
 --- !u!50 &861732469
 Rigidbody2D:
   serializedVersion: 4
@@ -8596,8 +8612,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da77b540589783b4bbec087a75f3aca6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rightAngle: 180
-  _leftAngle: 0
+  _rightAngle: 0
+  _leftAngle: 180
+--- !u!114 &861732477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 861732461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ac577947491b19419683593bd1cb456, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _timeOfPursuit: 4
 --- !u!1 &867829000
 GameObject:
   m_ObjectHideFlags: 0
@@ -33698,6 +33727,7 @@ GameObject:
   - component: {fileID: 2008545278}
   - component: {fileID: 2008545277}
   - component: {fileID: 2008545279}
+  - component: {fileID: 2008545280}
   m_Layer: 0
   m_Name: Enemy4
   m_TagString: Untagged
@@ -33830,7 +33860,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rayLength: 3
-  _timeOfPursuit: 2
 --- !u!114 &2008545270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33846,7 +33875,9 @@ MonoBehaviour:
   _rotator: {fileID: 2008545279}
   _mover: {fileID: 2008545276}
   _vision: {fileID: 2008545278}
-  _patroler: {fileID: 2008545269}
+  _patroller: {fileID: 2008545269}
+  _chaser: {fileID: 2008545280}
+  _attacker: {fileID: 2008545271}
 --- !u!114 &2008545271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33861,7 +33892,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 2
   _lenghtRay: 2
-  _deltaTime: 1
+  _deltaTime: 3
 --- !u!50 &2008545272
 Rigidbody2D:
   serializedVersion: 4
@@ -33968,8 +33999,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da77b540589783b4bbec087a75f3aca6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rightAngle: 180
-  _leftAngle: 0
+  _rightAngle: 0
+  _leftAngle: 180
+--- !u!114 &2008545280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2008545264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ac577947491b19419683593bd1cb456, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _timeOfPursuit: 4
 --- !u!1 &2029409154
 GameObject:
   m_ObjectHideFlags: 0
