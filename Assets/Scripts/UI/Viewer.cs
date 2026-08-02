@@ -60,12 +60,12 @@ public class Viewer : MonoBehaviour
         _healthFingerSlider.value = _currentHealthFingerSlider;
     }
 
-    public void NotifyHealingButtonPressed()
+    private void NotifyHealingButtonPressed()
     {
         HealingButtonPressed?.Invoke(_treatmentUnits);
     }
 
-    public void NotifyTakeDamageButtonPressed()
+    private void NotifyTakeDamageButtonPressed()
     {
         TakeDamageButtonPressed?.Invoke(_damageReceivedUnits);
     }
