@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -9,7 +11,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Chaser _chaser;
     [SerializeField] private EnemyAttacker _attacker;
 
-    private Coroutine _coroutine;
+    private Coroutine _visionCoroutine;
+    private Coroutine _attackCoroutine;
 
     private void OnEnable()
     {
@@ -31,14 +34,14 @@ public class Enemy : MonoBehaviour
 
         if (_vision.IsPlayerVisible())
         {
-            if (_coroutine == null)
+            if (_visionCoroutine == null)
             {
-                _coroutine = StartCoroutine(_chaser.ChaseTarget(_vision.GetTargetPosition()));
+                _visionCoroutine = StartCoroutine(_chaser.ChaseTarget(_vision.GetTargetPosition()));
             }
 
-            if (_attacker.CanAttack())
+            if (_attackCoroutine == null)
             {
-                _attacker.Attack();
+                _attackCoroutine = StartCoroutine(_attacker.Attacking());
             }
         }
         else
@@ -53,11 +56,18 @@ public class Enemy : MonoBehaviour
 
     private void FinishCoroutineWork()
     {
-        if (_coroutine != null)
+        if (_visionCoroutine != null)
         {
-            StopCoroutine(_coroutine);
+            StopCoroutine(_visionCoroutine);
 
-            _coroutine = null;
+            _visionCoroutine = null;
+        }
+
+        if (_attackCoroutine != null)
+        {
+            StopCoroutine(_attackCoroutine);
+
+            _attackCoroutine = null;
         }
     }
 }

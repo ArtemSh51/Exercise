@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerAttacker : MonoBehaviour
 {
-    [SerializeField] private float _damage;
+    [SerializeField] private int _damage;
     [SerializeField] private float _lenghtRay;
 
     private RaycastHit2D hit;

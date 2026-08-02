@@ -13,6 +13,8 @@ public class CoinSpawner : MonoBehaviour
 
     private List<Coin> _occupiedPoints;
 
+    private bool _CanCheckCoinForActivity = true;
+
     private void Awake()
     {
         _occupiedPoints = new List<Coin>(_points.Count);
@@ -54,7 +56,7 @@ public class CoinSpawner : MonoBehaviour
     {
         WaitForSeconds wait = new WaitForSeconds(_deltaTime);
 
-        while (true)
+        while (_CanCheckCoinForActivity)
         {
             ActivateInactiveCoin();
 

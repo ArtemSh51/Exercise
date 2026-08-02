@@ -3,20 +3,24 @@ using UnityEngine;
 
 public class Health : MonoBehaviour, IDamageable, IRecoverable
 {
-    [SerializeField, Range(1, 5000)] private float _value;
+    [SerializeField, Range(1, 5000)] private int _value;
 
-    private float _maxValue;
+    private int _maxValue;
 
-    public float Value => _value;
+    public int Value => _value;
+
+    public event Action<int, int> HealthChanged;
 
     public event Action<Transform> Died;
 
-    private void Start()
+    private void Awake()
     {
         _maxValue = _value;
+
+        HealthChanged?.Invoke(_maxValue, _value);
     }
 
-    public void TakeDamage(float amount)
+    public void TakeDamage(int amount)
     {
         _value = Mathf.Clamp(_value -  amount, 0, _maxValue);
 
@@ -24,11 +28,15 @@ public class Health : MonoBehaviour, IDamageable, IRecoverable
         {
             Kill();
         }
+
+        HealthChanged?.Invoke(_maxValue, _value);
     }
 
     public void Restore()
     {
         _value = _maxValue;
+
+        HealthChanged?.Invoke(_maxValue, _value);
     }
 
     public void Treat(int healthGainFromTreatment)
@@ -39,6 +47,8 @@ public class Health : MonoBehaviour, IDamageable, IRecoverable
         }
 
         _value = Mathf.Clamp(_value + healthGainFromTreatment, 0, _maxValue);
+
+        HealthChanged?.Invoke(_maxValue, _value);
     }
 
     private void Kill()
