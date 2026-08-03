@@ -3,24 +3,27 @@ using UnityEngine;
 public class Presenter : MonoBehaviour
 {
     [SerializeField] private Health _health;
-    [SerializeField] private HealthText _healthText;
-    [SerializeField] private HealthSlider _healthSlider;
-    [SerializeField] private HealthFingerSlider _healthFingerSlider;
-    [SerializeField] private ButtonController _healingButton;
-    [SerializeField] private ButtonController _takeDamageButton;
+    [SerializeField] private Viewer _viewer;
+
+    private IView _view;
+
+    private void Awake()
+    {
+        _view = _viewer;
+    }
 
     private void OnEnable()
     {
         _health.HealthChanged += UpdateHealth;
-        _healingButton.ButtonPressed += Treat;
-        _takeDamageButton.ButtonPressed += TakeDamage;
+        _view.HealingButtonPressed += Treat;
+        _view.TakeDamageButtonPressed += TakeDamage;
     }
 
     private void OnDisable()
     {
         _health.HealthChanged -= UpdateHealth;
-        _healingButton.ButtonPressed -= Treat;
-        _takeDamageButton.ButtonPressed -= TakeDamage;
+        _view.HealingButtonPressed -= Treat;
+        _view.TakeDamageButtonPressed -= TakeDamage;
     }
 
     private void Treat(int treatmentUnits)
@@ -35,8 +38,6 @@ public class Presenter : MonoBehaviour
 
     private void UpdateHealth(int maxHealth, int currentHealth)
     {
-        _healthText.UpdateHealth(maxHealth, currentHealth);
-        _healthSlider.UpdateHealth(maxHealth, currentHealth);
-        _healthFingerSlider.UpdateHealth(maxHealth, currentHealth);
+        _view.UpdateHealth(maxHealth, currentHealth);
     }
 }

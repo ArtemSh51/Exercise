@@ -3334,6 +3334,7 @@ GameObject:
   - component: {fileID: 331312951}
   - component: {fileID: 331312950}
   - component: {fileID: 331312949}
+  - component: {fileID: 331312954}
   - component: {fileID: 331312953}
   m_Layer: 0
   m_Name: EventSystem
@@ -3405,6 +3406,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _health: {fileID: 760787980}
+  _viewer: {fileID: 331312954}
+--- !u!114 &331312954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 331312948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f52b4ce5b247a204a8af0837491516c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _healthText: {fileID: 1672652930}
   _healthSlider: {fileID: 544069301}
   _healthFingerSlider: {fileID: 653684501}
