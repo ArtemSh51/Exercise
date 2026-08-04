@@ -15,25 +15,11 @@ public class Presenter : MonoBehaviour
     private void OnEnable()
     {
         _health.HealthChanged += UpdateHealth;
-        _view.HealingButtonPressed += Treat;
-        _view.TakeDamageButtonPressed += TakeDamage;
     }
 
     private void OnDisable()
     {
         _health.HealthChanged -= UpdateHealth;
-        _view.HealingButtonPressed -= Treat;
-        _view.TakeDamageButtonPressed -= TakeDamage;
-    }
-
-    private void Treat(int treatmentUnits)
-    {
-        _health.Treat(treatmentUnits);
-    }
-
-    private void TakeDamage(int damageReceivedUnits)
-    {
-        _health.TakeDamage(damageReceivedUnits);
     }
 
     private void UpdateHealth(int maxHealth, int currentHealth)

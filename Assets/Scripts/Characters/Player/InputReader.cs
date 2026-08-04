@@ -4,9 +4,9 @@ using UnityEngine;
 public class InputReader : MonoBehaviour
 {
     private const string Horizontal = nameof(Horizontal);
-
     private const KeyCode KeyCodeJump = KeyCode.Space;
-    private const KeyCode KeyCodeAttack = KeyCode.Mouse0;
+
+    [SerializeField] private KeyCode KeyCodeAttack = KeyCode.Mouse0;
 
     public event Action<bool> ButtonJumpPressed;
     public event Action ButtonAttackPressed;

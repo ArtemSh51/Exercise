@@ -2,9 +2,10 @@ using UnityEngine;
 
 public class Respawner : MonoBehaviour
 {
+    private const bool CanRespawn = true;
+    
     [SerializeField] private Health _healthHandler;
     [SerializeField] private TrapChecker _groundChecker;
-    [SerializeField] private bool _canRespawn;
 
     private void OnEnable()
     {
@@ -22,7 +23,7 @@ public class Respawner : MonoBehaviour
 
     private void ReturnToRespawnPoint(Transform character)
     {
-        if (_canRespawn)
+        if (CanRespawn)
         {
             character.position = transform.position;
             _healthHandler.Restore();

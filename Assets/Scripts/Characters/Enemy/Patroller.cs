@@ -23,6 +23,6 @@ public class Patroller : MonoBehaviour
 
     private bool IsStandingOnEdge()
     {
-        return !Physics2D.Raycast(transform.position, -transform.up, _rayLength);
+        return Physics2D.Raycast(transform.position, -transform.up, _rayLength) == false;
     }
 }

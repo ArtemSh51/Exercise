@@ -32,6 +32,8 @@ public class Enemy : MonoBehaviour
     {
         float direction = 1;
 
+        direction = _patroller.GetPatrolDirection();
+
         if (_vision.IsPlayerVisible())
         {
             if (_visionCoroutine == null)
@@ -43,10 +45,6 @@ public class Enemy : MonoBehaviour
             {
                 _attackCoroutine = StartCoroutine(_attacker.Attacking());
             }
-        }
-        else
-        {
-            direction = _patroller.GetPatrolDirection();
         }
 
         _rotator.TurnByY(direction);
