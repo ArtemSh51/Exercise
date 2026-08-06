@@ -28,9 +28,5 @@ public class Respawner : MonoBehaviour
             character.position = transform.position;
             _healthHandler.Restore();
         }
-        else
-        {
-            Destroy(character.gameObject);
-        }
     }
 }

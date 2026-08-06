@@ -22,20 +22,29 @@ public class HealthFingerSlider : MonoBehaviour
 
     public void UpdateHealth(int maxHealth, int currentHealth)
     {
-        if (_coroutine == null)
-        {
-            _coroutine = StartCoroutine(UpdatingHealthFingerSlider());
-        }
-
-        _healthSlider.maxValue = maxHealth;
-
         if (currentHealth == maxHealth)
         {
+            _healthSlider.maxValue = maxHealth;
+            _healthSlider.value = maxHealth;
             _currentHealthFingerSlider = maxHealth;
             _targetHealthFingerSlider = maxHealth;
-        }
 
-        _targetHealthFingerSlider = currentHealth;
+            if (_coroutine != null)
+            {
+                StopCoroutine(_coroutine);
+
+                _coroutine = null;
+            }
+        }
+        else
+        {
+            if (_coroutine == null)
+            {
+                _coroutine = StartCoroutine(UpdatingHealthFingerSlider());
+            }
+
+            _targetHealthFingerSlider = currentHealth;
+        }
     }
 
     private IEnumerator UpdatingHealthFingerSlider()

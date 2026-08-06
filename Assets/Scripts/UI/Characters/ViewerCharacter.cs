@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Viewer : MonoBehaviour, IView
+public class ViewerCharacter : MonoBehaviour, IViewCharacter
 {
     [SerializeField] private HealthFingerSlider _healthFingerSlider;
 

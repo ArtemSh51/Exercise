@@ -9,11 +9,13 @@ public class Health : MonoBehaviour, IDamageable, IRecoverable
 
     public int Value => _value;
 
+    public int MaxValue => _maxValue;
+
     public event Action<int, int> HealthChanged;
 
     public event Action<Transform> Died;
 
-    private void Awake()
+    private void Start()
     {
         _maxValue = _value;
 

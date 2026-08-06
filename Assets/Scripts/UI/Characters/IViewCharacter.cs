@@ -1,4 +1,4 @@
-interface IView
+interface IViewCharacter
 {
     void UpdateHealth(int maxHealth, int currentHealth);
 }

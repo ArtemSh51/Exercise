@@ -8,6 +8,17 @@ public class Player : MonoBehaviour
     [SerializeField] private InputReader _inputReader;
     [SerializeField] private GroundChecker _groundChecker;
     [SerializeField] private PlayerAttacker _playerAttacker;
+    [SerializeField] private Health _health;
+    [SerializeField] private ViewerCharacter _viewer;
+
+    private ModelCharacter _model;
+    private PresenterCharacter _presenter;
+
+    private void Awake()
+    {
+        _model = new ModelCharacter(_health);
+        _presenter = new PresenterCharacter(_model, _viewer);
+    }
 
     private void OnEnable()
     {
@@ -39,5 +50,11 @@ public class Player : MonoBehaviour
         _animator.StartWalkingAnimation(moveHorizontal);
         _animator.StartJumpingAnimation(_groundChecker.IsGrounded);
         _animator.StartAttackingAnimation(keyCodeAttack);
+    }
+
+    public void Dispose()
+    {
+        _presenter?.Dispose();
+        _model?.Dispose();
     }
 }

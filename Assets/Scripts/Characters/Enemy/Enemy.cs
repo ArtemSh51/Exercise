@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -10,9 +8,20 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Patroller _patroller;
     [SerializeField] private Chaser _chaser;
     [SerializeField] private EnemyAttacker _attacker;
+    [SerializeField] private Health _health;
+    [SerializeField] private ViewerCharacter _viewer;
+
+    private ModelCharacter _model;
+    private PresenterCharacter _presenter;
 
     private Coroutine _visionCoroutine;
     private Coroutine _attackCoroutine;
+
+    private void Awake()
+    {
+        _model = new ModelCharacter(_health);
+        _presenter = new PresenterCharacter(_model, _viewer);
+    }
 
     private void OnEnable()
     {
@@ -50,6 +59,12 @@ public class Enemy : MonoBehaviour
         _rotator.TurnByY(direction);
 
         _mover.Move(direction);
+    }
+
+    public void Dispose()
+    {
+        _presenter?.Dispose();
+        _model?.Dispose();
     }
 
     private void FinishCoroutineWork()
